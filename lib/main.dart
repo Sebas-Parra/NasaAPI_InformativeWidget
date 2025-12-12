@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'view/home_widget_page.dart';
+import 'view/galaxy_gallery_page.dart';
 import 'providers/nasa_media_provider.dart';
 
 void main() {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const HomeWidgetPage(),
+        home: const GalaxyGalleryPage(),
       ),
     );
   }
