@@ -15,7 +15,6 @@ class _GalaxyGalleryPageState extends State<GalaxyGalleryPage> {
   @override
   void initState() {
     super.initState();
-    // Cargar categoría por defecto cuando entras
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider =
           Provider.of<NasaMediaProvider>(context, listen: false);
@@ -90,81 +89,166 @@ class _GalaxyGalleryPageState extends State<GalaxyGalleryPage> {
                         return Card(
                           margin: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 8),
-                          child: Column(
-                            crossAxisAlignment:
-                                CrossAxisAlignment.stretch,
-                            children: [
-                              if (item.imageUrl.isNotEmpty)
-                                AspectRatio(
-                                  aspectRatio: 16 / 9,
-                                  child: Image.network(
-                                    item.imageUrl,
-                                    fit: BoxFit.cover,
-                                    errorBuilder:
-                                        (context, error, stackTrace) =>
-                                            const Center(
-                                      child: Padding(
-                                        padding:
-                                            EdgeInsets.all(16.0),
-                                        child: Icon(
-                                          Icons.broken_image_rounded,
+                          child: InkWell(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (_) => Dialog(
+                                  child: Container(
+                                    constraints: BoxConstraints(
+                                      maxHeight:
+                                          MediaQuery.of(context).size.height *
+                                              0.8,
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        if (item.imageUrl.isNotEmpty)
+                                          ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4),
+                                              topRight: Radius.circular(4),
+                                            ),
+                                            child: Image.network(
+                                              item.imageUrl,
+                                              fit: BoxFit.cover,
+                                              height: 200,
+                                              errorBuilder: (context, error,
+                                                      stackTrace) =>
+                                                  const SizedBox(
+                                                height: 200,
+                                                child: Center(
+                                                  child: Icon(
+                                                    Icons.broken_image_rounded,
+                                                    size: 64,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                item.title,
+                                                style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.calendar_today,
+                                                    size: 14,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  const SizedBox(width: 4),
+                                                  Text(
+                                                    item.dateCreated,
+                                                    style: const TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 16),
+                                              const Divider(),
+                                              const SizedBox(height: 8),
+                                            ],
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: SingleChildScrollView(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16.0),
+                                            child: Text(
+                                              item.description,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                height: 1.5,
+                                              ),
+                                              textAlign: TextAlign.justify,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: ElevatedButton(
+                                            onPressed: () =>
+                                                Navigator.of(context).pop(),
+                                            child: const Text('Cerrar'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                if (item.imageUrl.isNotEmpty)
+                                  AspectRatio(
+                                    aspectRatio: 16 / 9,
+                                    child: Image.network(
+                                      item.imageUrl,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              const Center(
+                                        child: Padding(
+                                          padding: EdgeInsets.all(16.0),
+                                          child: Icon(
+                                            Icons.broken_image_rounded,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  item.title,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    item.title,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0),
-                                child: Text(
-                                  item.dateCreated,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey,
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Text(
+                                    item.dateCreated,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 4),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0, vertical: 4.0),
-                                child: Text(
-                                  item.description,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.justify,
+                                const SizedBox(height: 4),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0, vertical: 8.0),
+                                  child: Text(
+                                    item.description,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.justify,
+                                  ),
                                 ),
-                              ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: TextButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (_) => AlertDialog(
-                                        title: Text(item.title),
-                                        content: SingleChildScrollView(
-                                          child: Text(
-                                            item.description,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text('Yap'),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         );
                       },
