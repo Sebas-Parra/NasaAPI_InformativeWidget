@@ -8,27 +8,25 @@ class HomeWidgetPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        // Fondo degradado tipo widget de clima
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFF7C3AED), // morado
-              Color(0xFFEC4899), // rosa
+              Color(0xFF7C3AED), 
+              Color(0xFFEC4899), 
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: Center(
-          // ⬇️ AQUÍ EL CAMBIO: usamos ConstrainedBox en vez de SizedBox con height fija
           child: ConstrainedBox(
             constraints: const BoxConstraints(
               maxWidth: 340,
               minWidth: 340,
-              minHeight: 160, // como mínimo, pero puede crecer un poco más
+              minHeight: 160, 
             ),
             child: Material(
-              color: const Color(0xFF111827), // fondo oscuro
+              color: const Color(0xFF111827), 
               borderRadius: BorderRadius.circular(24),
               child: InkWell(
                 borderRadius: BorderRadius.circular(24),
@@ -43,7 +41,6 @@ class HomeWidgetPage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
-                    // ⬇️ ESTE DETAIL IMPORTANTE: deja que la columna ocupe solo lo necesario
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
